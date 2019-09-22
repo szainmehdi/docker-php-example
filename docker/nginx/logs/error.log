@@ -1,0 +1,7 @@
+2019/09/21 23:07:58 [warn] 1#1: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in /etc/nginx/conf.d/default.conf:19
+2019/09/21 23:07:58 [emerg] 1#1: host not found in upstream "fcgi" in /etc/nginx/conf.d/default.conf:54
+2019/09/21 23:08:27 [warn] 1#1: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in /etc/nginx/conf.d/default.conf:19
+2019/09/21 23:08:27 [emerg] 1#1: host not found in upstream "fcgi" in /etc/nginx/conf.d/default.conf:54
+2019/09/21 23:08:57 [warn] 1#1: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in /etc/nginx/conf.d/default.conf:19
+2019/09/22 01:04:35 [warn] 1#1: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in /etc/nginx/conf.d/default.conf:19
+2019/09/22 01:23:08 [warn] 1#1: the "ssl" directive is deprecated, use the "listen ... ssl" directive instead in /etc/nginx/conf.d/default.conf:19
