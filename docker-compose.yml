@@ -3,11 +3,16 @@ version: '3'
 networks:
   # TODO - replace with app name
   app:
+    driver: "bridge"
+
+volumes:
+  mysqldata:
+    driver: "local"
 
 services:
-  php:
+  app:
     image: szainmehdi/php:7.4-dev
-    container_name: php
+    container_name: app
     working_dir: /var/www
     environment:
       - XDEBUG_ENABLE=true
@@ -21,10 +26,10 @@ services:
     networks:
       - app
     depends_on:
-      - mysql
-  nginx:
+      - db
+  web:
     image: nginx:stable-alpine
-    container_name: nginx
+    container_name: web
     ports:
       - "80:80"
       - "443:443"
@@ -34,19 +39,23 @@ services:
       - ./docker/nginx/certs:/etc/nginx/certs
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - php
-      - mysql
+      - app
+      - db
     networks:
       - app
-  mysql:
+  cache:
+    image: redis:alpine
+    networks:
+      - app
+  db:
     image: mysql:8.0
-    container_name: mysql
+    container_name: db
     restart: unless-stopped
     tty: true
     ports:
       - "3306:3306"
     volumes:
-      - ./docker/mysql/storage:/var/lib/mysql
+      - mysqldata:/var/lib/mysql
     environment:
       MYSQL_DATABASE: example
       MYSQL_USER: docker
@@ -54,6 +63,7 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     networks:
       - app
+
 
 
 
