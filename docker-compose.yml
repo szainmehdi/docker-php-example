@@ -9,7 +9,11 @@ services:
     image: szainmehdi/php:7.4-dev
     container_name: php
     working_dir: /var/www
-    env_file: .env
+    environment:
+      - XDEBUG_ENABLE=true
+      - XDEBUG_REMOTE_PORT=9001
+      - XDEBUG_IDE_KEY=PHPSTORM
+      - XDEBUG_REMOTE_HOST=host.docker.internal
     volumes:
       - .:/var/www
     ports:
@@ -44,8 +48,8 @@ services:
     volumes:
       - ./docker/mysql/storage:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: homestead
-      MYSQL_USER: homestead
+      MYSQL_DATABASE: example
+      MYSQL_USER: docker
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
     networks:
