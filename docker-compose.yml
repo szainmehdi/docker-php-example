@@ -8,6 +8,8 @@ networks:
 volumes:
   mysqldata:
     driver: "local"
+  redisdata:
+    driver: "local"
 
 services:
   app:
@@ -27,6 +29,14 @@ services:
       - app
     depends_on:
       - db
+  node:
+    image: szainmehdi/node:12.10
+    container_name: node
+    networks:
+      - app
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
   web:
     image: nginx:stable-alpine
     container_name: web
@@ -48,6 +58,8 @@ services:
     container_name: cache
     networks:
       - app
+    volumes:
+      - redisdata:/data
   db:
     image: mysql:8.0
     container_name: db
