@@ -45,6 +45,7 @@ services:
       - app
   cache:
     image: redis:alpine
+    container_name: cache
     networks:
       - app
   db:
