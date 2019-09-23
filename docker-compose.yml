@@ -2,7 +2,7 @@ version: '3'
 
 networks:
   # TODO - replace with app name
-  example-net:
+  app:
 
 services:
   php:
@@ -19,7 +19,7 @@ services:
     ports:
       - "9000:9000"
     networks:
-      - example-net
+      - app
     depends_on:
       - mysql
   nginx:
@@ -37,7 +37,7 @@ services:
       - php
       - mysql
     networks:
-      - example-net
+      - app
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -53,7 +53,7 @@ services:
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
     networks:
-      - example-net
+      - app
 
 
 
