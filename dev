@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+COMPOSE="docker-compose"
+WDIR=/var/www
+
+function run {
+  set -x && $COMPOSE run --rm \
+    -w $WDIR \
+    "$@"
+}
+
+# If we pass any arguments...
+if [ $# -gt 0 ];then
+    # If "art" is used, pass-thru to "artisan"
+    # inside a new container
+    if [ "$1" == "art" ]; then
+      shift 1
+      run app \
+        php artisan "$@"
+
+    # If "composer" is used, pass-thru to "composer"
+    # inside a new container
+    elif [ "$1" == "composer" ]; then
+      shift 1
+      run app \
+        composer "$@"
+
+    # If "test" is used, run unit tests,
+    # pass-thru any extra arguments to php-unit
+    elif [ "$1" == "test" ]; then
+      shift 1
+      run app \
+        ./vendor/bin/phpunit "$@"
+
+    # If "npm" is used, run npm
+    # from our node container
+    elif [ "$1" == "npm" ]; then
+      shift 1
+      run node \
+        npm "$@"
+
+    # If "yarn" is used, run yarn
+    # from our node container
+    elif [ "$1" == "yarn" ]; then
+      shift 1
+      run node \
+        yarn "$@"
+
+    # Else, pass-thru args to docker-compose
+    else
+        $COMPOSE "$@"
+    fi
+
+else
+    $COMPOSE ps
+fi
