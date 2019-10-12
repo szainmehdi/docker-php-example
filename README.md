@@ -6,7 +6,7 @@ This codebase serves as an example of a PHP, MySQL, nginx project using Docker.
 
 #### Configure nginx
 
-Edit `docker/nginx/default.conf` and replace `example.test` with your domain name. 
+Edit `docker/nginx/local.conf` and replace `example.test` with your domain name. 
 Then, generate an SSL certificate for the domain:
 
 ```shell script
@@ -18,5 +18,5 @@ cd docker/nginx
 #### Up, Up, and Away
 
 ```shell script
-docker-compose up -d
+./dev up -d
 ```
