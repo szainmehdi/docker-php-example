@@ -27,7 +27,7 @@ fi
 
 # https://example.test Cert
 CERTS_PATH="./certs";
-CERT_FILE_NAME="$CERTS_PATH/example.test.crt";
+CERT_FILE_NAME="$CERTS_PATH/$HOSTNAME.crt";
 
 if [ -f $CERT_FILE_NAME ]
 then

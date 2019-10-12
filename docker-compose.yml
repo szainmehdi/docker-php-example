@@ -30,12 +30,11 @@ services:
     volumes:
       - .:/var/www
   web:
-    image: nginx:stable-alpine
+    image: szainmehdi/nginx:1.17.4
     container_name: web
     volumes:
       - ./public:/var/www/public
-      - ./docker/nginx/logs:/var/log/nginx
-      - ./docker/nginx/certs:/etc/nginx/certs
+      - ./docker/nginx/certs:/etc/nginx/certs:ro
     depends_on:
       - app
       - db
