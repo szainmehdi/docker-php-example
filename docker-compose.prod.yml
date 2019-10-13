@@ -1,0 +1,65 @@
+version: '3.4'
+
+networks:
+  app:
+    driver: "bridge"
+
+volumes:
+  mysqldata:
+    driver: "local"
+  redisdata:
+    driver: "local"
+
+services:
+  app:
+    image: docker-example/app:latest
+    build:
+      context: .
+      target: app-prod
+    restart: unless-stopped
+    container_name: app
+    networks:
+      - app
+    depends_on:
+      - db
+  web:
+    image: docker-example/web:latest
+    build:
+      context: .
+      target: web-prod
+    restart: unless-stopped
+    container_name: web
+    volumes:
+      - ./docker/nginx/certs:/etc/nginx/certs:ro
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - app
+      - db
+    networks:
+      - app
+  cache:
+    image: redis:alpine
+    container_name: cache
+    networks:
+      - app
+    volumes:
+      - redisdata:/data
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: unless-stopped
+    volumes:
+      - mysqldata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: example
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    networks:
+      - app
+
+
+
+
