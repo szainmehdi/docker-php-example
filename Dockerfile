@@ -34,7 +34,7 @@ RUN npm install && npm run production
 # ---------------------------------------------------------------------------
 # Final Production Images
 # ---------------------------------------------------------------------------
-FROM nginx AS nginx-prod
+FROM szainmehdi/nginx:${NGINX_VERSION} AS web-prod
 
 COPY public /var/www/public
 COPY --from=assets /var/www/public/css /var/www/public/css
@@ -57,6 +57,8 @@ COPY .env.production .env
 RUN composer dump-autoload -n -o --no-dev \
     && composer check-platform-reqs \
     && php artisan config:cache
+
+RUN chown -R www-data: /var/www
 
 
 
